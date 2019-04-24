@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Travel Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-success">
+        <a class="navbar-brand" href="#">TravelBuddy</a>
+            <span>
+                <a class="btn btn-success btn-md" href="/logout" role="button">Logout</a>
+            </span>
+        </nav>
+    <div class="container">
+        <br>
+        <h2>Hello, {{ user.name }}!</h2>
+        <br>
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Your Trip Schedules</h4>
+                    <p class="card-text">
+                        <table class="table table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Destination</th>
+                                    <th>Travel Start Date</th>
+                                    <th>Travel End Date</th>
+                                    <th>Plan</th>
+                                    <th>Modify</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for trip in myTrips %}
+                                <tr>
+                                    <td><a href="/travels/destination/{{trip.id}}">{{trip.destination}}</a></td>
+                                    <td>{{trip.travel_from}}</td>
+                                    <td>{{trip.travel_to}}</td>
+                                    <td>{{trip.description}}</td>
+                                    <td><a href="/destroy/{{trip.id}}">Destroy</a></td>
+                                </tr>
+                                {% endfor %}
+                                {% for joinedNotPlanner in joinedNotPlanner %}
+                                    <tr>
+                                        <td><a href="/travels/destination/{{joinedNotPlanner.id}}">{{joinedNotPlanner.destination}}</a></td>
+                                        <td>{{joinedNotPlanner.travel_from}}</td>
+                                        <td>{{joinedNotPlanner.travel_to}}</td>
+                                        <td>{{joinedNotPlanner.description}}</td>
+                                        <td><a href="/remove/{{joinedNotPlanner.id}}">Remove</a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Other User's Travel Plans</h4>
+                    <p class="card-text">
+                        <table class="table table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Destination</th>
+                                    <th>Travel Start Date</th>
+                                    <th>Travel End Date</th>
+                                    <th>Join</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for notJoin in notJoined %}
+                                <tr>
+                                    <td>{{notJoin.planner.name}}</td>
+                                    <td><a href="/travels/destination/{{notJoin.id}}">{{notJoin.destination}}</a></td>
+                                    <td>{{notJoin.travel_from}}</td>
+                                    <td>{{notJoin.travel_to}}</td>
+                                    <td><a href="/join/{{notJoin.id}}">Join</a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>  
+                    </p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <p align="right">
+                <a href="/travels/add"><input type="submit" value="Add Travel Plan" class="btn btn-success mb-2"></a>
+            </p>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
